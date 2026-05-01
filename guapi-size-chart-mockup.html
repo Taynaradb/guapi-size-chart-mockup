@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUAPI — Obsidian Black Coffin Arc Embellished Denim</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --dark: #1a1a1a;
+    --mid: #2a2a2a;
+    --border: #2e2e2e;
+    --muted: #666;
+    --light: #aaa;
+    --white: #f5f5f5;
+    --accent: #ffffff;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--light);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .nav-actions a {
+    color: var(--light);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .cart-btn {
+    background: var(--white);
+    color: var(--black) !important;
+    padding: 6px 14px;
+    font-size: 11px !important;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 14px 40px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .breadcrumb span { color: var(--light); }
+
+  /* PRODUCT LAYOUT */
+  .product-wrap {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 100px);
+  }
+
+  /* IMAGE GALLERY */
+  .gallery {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+  }
+  .thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    overflow-y: auto;
+    background: var(--off-black);
+    border-right: 1px solid var(--border);
+  }
+  .thumbnails::-webkit-scrollbar { width: 3px; }
+  .thumbnails::-webkit-scrollbar-track { background: transparent; }
+  .thumbnails::-webkit-scrollbar-thumb { background: var(--mid); }
+  .thumb {
+    width: 64px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .thumb.active, .thumb:hover { opacity: 1; }
+  .main-image-wrap {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+  .main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* PRODUCT INFO */
+  .product-info {
+    padding: 40px 48px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .product-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+
+  .product-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    line-height: 1.05;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .product-price {
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .product-price-note {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* SIZE SECTION */
+  .size-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .size-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+    font-weight: 500;
+  }
+
+  /* SIZE CHART TRIGGER — the key interactive element */
+  .size-chart-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    padding: 4px 0;
+    transition: color 0.2s;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--border);
+  }
+  .size-chart-trigger:hover {
+    color: var(--white);
+    text-decoration-color: var(--muted);
+  }
+  .size-chart-trigger svg {
+    flex-shrink: 0;
+  }
+
+  .size-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .size-btn {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    letter-spacing: 0.5px;
+  }
+  .size-btn:hover { border-color: var(--white); }
+  .size-btn.active {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+    font-weight: 600;
+  }
+  .size-btn.sold-out {
+    color: var(--muted);
+    border-color: var(--border);
+    cursor: not-allowed;
+    position: relative;
+  }
+  .size-btn.sold-out::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    right: 8px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* QUANTITY */
+  .qty-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .qty-btn {
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .qty-btn:hover { background: var(--mid); }
+  .qty-num {
+    width: 52px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--white);
+  }
+
+  /* CTA */
+  .btn-add {
+    width: 100%;
+    padding: 16px;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 12px;
+  }
+  .btn-add:hover {
+    background: var(--accent);
+  }
+  .btn-wish {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 20px;
+  }
+  .btn-wish:hover { color: var(--white); border-color: var(--white); }
+
+  .stock-note {
+    font-size: 11px;
+    color: #c47a3a;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .stock-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c47a3a;
+    flex-shrink: 0;
+  }
+
+  /* DESCRIPTION */
+  .description {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--light);
+    margin-bottom: 24px;
+  }
+
+  .features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .features li {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    letter-spacing: 0.3px;
+  }
+  .features li::before {
+    content: '—';
+    color: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* TRUST BADGES */
+  .trust-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+  .trust-item span {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ===== SIZE CHART MODAL ===== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    backdrop-filter: blur(4px);
+  }
+  .modal-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .modal {
+    background: #f9f9f7;
+    color: #111;
+    width: 90%;
+    max-width: 760px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.25s;
+  }
+  .modal-backdrop.open .modal {
+    transform: translateY(0);
+  }
+  .modal::-webkit-scrollbar { width: 4px; }
+  .modal::-webkit-scrollbar-track { background: #eee; }
+  .modal::-webkit-scrollbar-thumb { background: #bbb; }
+
+  .modal-header {
+    padding: 32px 36px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .modal-header-left {}
+  .modal-product-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+    color: #111;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .modal-subtitle {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    padding: 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .modal-close:hover { color: #111; }
+
+  /* UNIT TOGGLE */
+  .unit-toggle-wrap {
+    padding: 20px 36px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .unit-toggle-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .unit-toggle {
+    display: flex;
+    background: #ebebeb;
+    padding: 3px;
+    gap: 2px;
+  }
+  .unit-btn {
+    padding: 7px 20px;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #888;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .unit-btn.active {
+    background: #111;
+    color: #f9f9f7;
+  }
+
+  /* TABLE */
+  .modal-body {
+    padding: 28px 36px 36px;
+  }
+  .size-table-wrap {
+    overflow-x: auto;
+  }
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 480px;
+  }
+  .size-table thead tr {
+    border-bottom: 2px solid #111;
+  }
+  .size-table th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+    font-weight: 600;
+  }
+  .size-table th:first-child { padding-left: 0; }
+  .size-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e8e8e8;
+    color: #222;
+    font-weight: 400;
+  }
+  .size-table td:first-child {
+    padding-left: 0;
+    font-weight: 600;
+    color: #111;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  .size-table tbody tr:last-child td { border-bottom: none; }
+  .size-table tbody tr:hover td { background: #f0f0ee; }
+  .size-table tbody tr.highlighted td { background: #f0f0ee; }
+  .size-table tbody tr.highlighted td:first-child { color: #000; }
+
+  .modal-note {
+    margin-top: 24px;
+    padding: 16px;
+    background: #f0f0ee;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.7;
+    letter-spacing: 0.2px;
+  }
+  .modal-note strong { color: #333; }
+
+  /* RECOMMENDED PRODUCTS */
+  .you-may-like {
+    padding: 48px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--off-black);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .rec-card {
+    cursor: pointer;
+  }
+  .rec-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9);
+    transition: filter 0.3s;
+  }
+  .rec-card:hover .rec-img { filter: brightness(1); }
+  .rec-info {
+    padding: 12px 0 8px;
+  }
+  .rec-name {
+    font-size: 12px;
+    color: var(--light);
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+  }
+  .rec-price {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-brand {}
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .footer-tagline {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+  }
+  .footer-col h4 {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-col ul li a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--off-black);
+  }
+  .footer-bottom span {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .payment-icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .pay-badge {
+    background: var(--mid);
+    color: var(--light);
+    font-size: 9px;
+    padding: 3px 7px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">GUAPI</a>
+  <ul class="nav-links">
+    <li><a href="#">Men</a></li>
+    <li><a href="#">Women</a></li>
+    <li><a href="#">Kidswear</a></li>
+    <li><a href="#">Sneakers</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#">Account</a>
+    <a href="#" class="cart-btn">Cart (0)</a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  Home &nbsp;/&nbsp; Men &nbsp;/&nbsp; Denim Pants &nbsp;/&nbsp; <span>Obsidian Black Coffin Arc Embellished Denim</span>
+</div>
+
+<!-- PRODUCT -->
+<div class="product-wrap">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="thumbnails" id="thumbs">
+      <img class="thumb active" src="https://www.guapi.ch/cdn/shop/files/071A4103.jpg?v=1768395298&width=200" alt="view 1" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4105_e13a3c4c-abcd-42c8-b886-a62b7a0dc376.jpg?v=1768395299&width=200" alt="view 2" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4106.jpg?v=1768395298&width=200" alt="view 3" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4107.jpg?v=1768395298&width=200" alt="view 4" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4111.jpg?v=1768395299&width=200" alt="view 5" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4115.jpg?v=1768395298&width=200" alt="view 6" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4117.jpg?v=1768395299&width=200" alt="view 7" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4119.jpg?v=1768395298&width=200" alt="view 8" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4120.jpg?v=1768395298&width=200" alt="view 9" onclick="setMain(this)">
+      <img class="thumb" src="https://www.guapi.ch/cdn/shop/files/071A4121.jpg?v=1768395299&width=200" alt="view 10" onclick="setMain(this)">
+    </div>
+    <div class="main-image-wrap">
+      <img class="main-image" id="mainImg" src="https://www.guapi.ch/cdn/shop/files/071A4103.jpg?v=1768395298&width=900" alt="Obsidian Black Coffin Arc Embellished Denim">
+    </div>
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="product-info">
+    <div class="product-badge">New Arrival — Denim</div>
+    <h1 class="product-title">Obsidian Black Coffin Arc<br>Embellished Denim</h1>
+    <div class="product-price">$200.00 USD</div>
+    <div class="product-price-note">Taxes included. Free shipping on orders over $150.</div>
+
+    <div class="divider"></div>
+
+    <!-- SIZE -->
+    <div class="size-header">
+      <span class="size-label">Size — 28</span>
+      <!-- ✦ SIZE CHART TRIGGER -->
+      <button class="size-chart-trigger" onclick="openModal()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="1" y1="9" x2="13" y2="9" stroke="currentColor" stroke-width="1.1"/>
+          <line x1="5" y1="1" x2="5" y2="13" stroke="currentColor" stroke-width="1.1"/>
+        </svg>
+        Size chart
+      </button>
+    </div>
+
+    <div class="size-grid">
+      <button class="size-btn active">28</button>
+      <button class="size-btn sold-out">30</button>
+      <button class="size-btn sold-out">32</button>
+      <button class="size-btn sold-out">34</button>
+      <button class="size-btn sold-out">36</button>
+      <button class="size-btn sold-out">38</button>
+      <button class="size-btn sold-out">40</button>
+      <button class="size-btn sold-out">42</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QTY -->
+    <div class="qty-label">Quantity</div>
+    <div class="qty-wrap">
+      <button class="qty-btn">−</button>
+      <div class="qty-num">1</div>
+      <button class="qty-btn">+</button>
+    </div>
+
+    <!-- STOCK -->
+    <div class="stock-note">
+      <div class="stock-dot"></div>
+      Only 6 left in stock. Order soon.
+    </div>
+
+    <!-- CTA -->
+    <button class="btn-add">Add to cart</button>
+    <button class="btn-wish">Save to wishlist</button>
+
+    <div class="divider"></div>
+
+    <!-- DESCRIPTION -->
+    <p class="description">
+      The Obsidian Black Coffin Arc Embellished Denim delivers a sharp, armored silhouette in a deep black wash, finished with a subtle speckled texture that reads like night-sky grit. Every panel is purposeful — built for statement wear without shouting.
+    </p>
+
+    <ul class="features">
+      <li>Obsidian black denim with speckled, embellished texture</li>
+      <li>Structured seam detailing for a sculpted front profile</li>
+      <li>Dual flap cargo pockets with metal button closures</li>
+      <li>Coffin knee panel graphics with GUAPI branding on the right</li>
+      <li>Flared lower leg with side zippers and snap-button accents</li>
+    </ul>
+
+    <!-- TRUST -->
+    <div class="trust-row">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5L11.06 6.26L16.5 6.93L12.75 10.47L13.73 15.5L9 12.77L4.27 15.5L5.25 10.47L1.5 6.93L6.94 6.26L9 1.5Z" stroke="#666" stroke-width="1.1" stroke-linejoin="round"/></svg>
+        <span>Fast Global Shipping</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 9L6 13L16 4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Free Returns</span>
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="1.5" stroke="#666" stroke-width="1.1"/><path d="M5 5V4C5 2.34 6.34 1 8 1H10C11.66 1 13 2.34 13 4V5" stroke="#666" stroke-width="1.1"/></svg>
+        <span>Secure Payments</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- YOU MAY ALSO LIKE -->
+<div class="you-may-like">
+  <div class="section-title">You May Also Like</div>
+  <div class="rec-grid">
+    <div class="rec-card">
+      <img class="rec-img" src="https://www.guapi.ch/cdn/shop/files/hf_20260211_103746_8386a5ec-3abe-486b-b2af-01b6d648941b.png?v=1770806561&width=400" alt="Black Waxed Rope Denim">
+      <div class="rec-info">
+        <div class="rec-name">Black Waxed Rope Denim</div>
+        <div class="rec-price">$190.00</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <img class="rec-img" src="https://www.guapi.ch/cdn/shop/files/071A4153_f023946c-ec8e-4f34-808a-1270cab5dafa.jpg?v=1776401674&width=400" alt="Aqua Blue Cross Buckle Denim">
+      <div class="rec-info">
+        <div class="rec-name">Aqua Blue Cross Buckle Denim</div>
+        <div class="rec-price">$220.00</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <img class="rec-img" src="https://www.guapi.ch/cdn/shop/files/071A3779_cb15ed2a-161b-4c60-bca9-f99b82ed7766.jpg?v=1768487200&width=400" alt="Aqua Blue Spider Denim">
+      <div class="rec-info">
+        <div class="rec-name">Aqua Blue Spider Denim</div>
+        <div class="rec-price">$190.00</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <img class="rec-img" src="https://www.guapi.ch/cdn/shop/files/071A3899_300b3591-9868-4fc0-b11b-9f2ab41cdf63.jpg?v=1768548955&width=400" alt="French Rose Black Ops Denim">
+      <div class="rec-info">
+        <div class="rec-name">French Rose Black Ops Denim</div>
+        <div class="rec-price">$180.00</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo">GUAPI</div>
+    <p class="footer-tagline">Statement fashion for the bold. Designed to move, built to last.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Shop</h4>
+    <ul>
+      <li><a href="#">Men</a></li>
+      <li><a href="#">Women</a></li>
+      <li><a href="#">Kidswear</a></li>
+      <li><a href="#">Sneakers</a></li>
+      <li><a href="#">Best Sellers</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Help</h4>
+    <ul>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">Returns & Refunds</a></li>
+      <li><a href="#">Delivery Policy</a></li>
+      <li><a href="#">Payment Options</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Company</h4>
+    <ul>
+      <li><a href="#">About Us</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Wholesale</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms & Conditions</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 GUAPI CLOTHING FZ-LLC. All rights reserved.</span>
+  <div class="payment-icons">
+    <span class="pay-badge">Visa</span>
+    <span class="pay-badge">MC</span>
+    <span class="pay-badge">Amex</span>
+    <span class="pay-badge">PayPal</span>
+  </div>
+</div>
+
+<!-- ===== SIZE CHART MODAL ===== -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="handleBackdropClick(event)">
+  <div class="modal" id="sizeModal">
+
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-product-name">Obsidian Black Coffin Arc<br>Embellished Denim</div>
+        <div class="modal-subtitle">Size Guide — Denim / Bottoms</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close size chart">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="18" y1="4" x2="4" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="unit-toggle-wrap">
+      <span class="unit-toggle-label">Units</span>
+      <div class="unit-toggle">
+        <button class="unit-btn active" id="btnIn" onclick="setUnit('in')">Inches</button>
+        <button class="unit-btn" id="btnCm" onclick="setUnit('cm')">Centimeters</button>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="size-table-wrap">
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th id="h-waist">Waist</th>
+              <th id="h-hip">Hip</th>
+              <th id="h-thigh">Thigh</th>
+              <th id="h-inseam">Inseam</th>
+              <th id="h-rise">Rise</th>
+            </tr>
+          </thead>
+          <tbody id="sizeBody"></tbody>
+        </table>
+      </div>
+      <div class="modal-note">
+        <strong>How to measure:</strong> Measure your natural waist at the narrowest point, keeping the tape parallel to the floor. For hip, measure at the fullest part. All measurements reflect the body, not the garment. If between sizes, size up for a relaxed fit.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Thumbnail switcher
+  function setMain(thumb) {
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    const bigSrc = thumb.src.replace('width=200', 'width=900');
+    document.getElementById('mainImg').src = bigSrc;
+  }
+
+  // Size data
+  const sizeData = {
+    in: [
+      { size: '28', waist: '28"', hip: '35"', thigh: '22"', inseam: '32"', rise: '10.5"' },
+      { size: '30', waist: '30"', hip: '37"', thigh: '23"', inseam: '32"', rise: '10.5"' },
+      { size: '32', waist: '32"', hip: '39"', thigh: '24"', inseam: '32.5"', rise: '11"' },
+      { size: '34', waist: '34"', hip: '41"', thigh: '25"', inseam: '32.5"', rise: '11"' },
+      { size: '36', waist: '36"', hip: '43"', thigh: '26"', inseam: '33"', rise: '11.5"' },
+      { size: '38', waist: '38"', hip: '45"', thigh: '27.5"', inseam: '33"', rise: '11.5"' },
+      { size: '40', waist: '40"', hip: '47"', thigh: '29"', inseam: '33.5"', rise: '12"' },
+      { size: '42', waist: '42"', hip: '49"', thigh: '30.5"', inseam: '33.5"', rise: '12"' },
+    ],
+    cm: [
+      { size: '28', waist: '71 cm', hip: '89 cm', thigh: '56 cm', inseam: '81 cm', rise: '27 cm' },
+      { size: '30', waist: '76 cm', hip: '94 cm', thigh: '58 cm', inseam: '81 cm', rise: '27 cm' },
+      { size: '32', waist: '81 cm', hip: '99 cm', thigh: '61 cm', inseam: '83 cm', rise: '28 cm' },
+      { size: '34', waist: '86 cm', hip: '104 cm', thigh: '64 cm', inseam: '83 cm', rise: '28 cm' },
+      { size: '36', waist: '91 cm', hip: '109 cm', thigh: '66 cm', inseam: '84 cm', rise: '29 cm' },
+      { size: '38', waist: '97 cm', hip: '114 cm', thigh: '70 cm', inseam: '84 cm', rise: '29 cm' },
+      { size: '40', waist: '102 cm', hip: '119 cm', thigh: '74 cm', inseam: '85 cm', rise: '30 cm' },
+      { size: '42', waist: '107 cm', hip: '124 cm', thigh: '77 cm', inseam: '85 cm', rise: '30 cm' },
+    ]
+  };
+
+  let currentUnit = 'in';
+
+  function renderTable() {
+    const data = sizeData[currentUnit];
+    const tbody = document.getElementById('sizeBody');
+    tbody.innerHTML = data.map((row, i) => `
+      <tr${i === 0 ? ' class="highlighted"' : ''}>
+        <td>${row.size}</td>
+        <td>${row.waist}</td>
+        <td>${row.hip}</td>
+        <td>${row.thigh}</td>
+        <td>${row.inseam}</td>
+        <td>${row.rise}</td>
+      </tr>
+    `).join('');
+  }
+
+  function setUnit(unit) {
+    currentUnit = unit;
+    document.getElementById('btnIn').classList.toggle('active', unit === 'in');
+    document.getElementById('btnCm').classList.toggle('active', unit === 'cm');
+    renderTable();
+  }
+
+  function openModal() {
+    document.getElementById('modalBackdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderTable();
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === document.getElementById('modalBackdrop')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Size button selection
+  document.querySelectorAll('.size-btn:not(.sold-out)').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
